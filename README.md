@@ -1,54 +1,44 @@
-# HBNB
+<p align="center">
+  <img src="https://i.imgur.com/ogbfW3k.png">
+</p>
 
-This is the console /command interpreter for the Holberton Airbnb clone project. The console can be used to store objects in and retrieve objects from a JSON.
+# AirBnB_clone
+* This repository contains a full-stack clone of AirBnB divided into 6 parts:
 
-### Supported classes:
-* BaseModel
-* User
-* State
-* City
-* Amenity
-* Place
-* Review
+| Component 	| Description 	|
+|:--------------------------:	|:------------------------------------------------------------:	|
+| [Console](https://github.com/tuvo1106/AirBnB_clone) 	| Data model management via command interpreter 	|
+| [Web static](https://github.com/tuvo1106/AirBnB_clone/tree/master/web_static) | HTML/CSS/Templates 	|
+| [MySQL storage](https://github.com/tuvo1106/AirBnB_clone_v2) | Importing local file storage to database |
+| Web framework - templating 	| Web server deployment in Python 	|
+| RESTful API 	| JSON web interface to display all objects 	|
+| Web dynamic 	| Loading of objects from client side using Jquery/RESTful API 	|
+---
+Example of final product:
+<p align="center">
+  <img src="https://s3.amazonaws.com/intranet-projects-files/holbertonschool-higher-level_programming+/268/8-index.png">
+</p>
 
-### Commands:
-* create - create an object
-* show - show an object (based on id)
-* destroy - destroy an object
-* all - show all objects, of one type or all types
-* quit/EOF - quit the console
-* help - see descriptions of commands
+## Techstack
 
-To start, navigate to the project folder and enter `./console.py` in the shell.
+<p align="center">
+  <img src="https://i.imgur.com/lgZnZrz.png">
+</p>
 
-#### Create
-`create <class name>`
-Ex:
-`create BaseModel`
+## Usage
+* All files will be executed on Ubuntu 14.04 LTS using MySQL 5.7 and Python3 (version 3.4.3)
+* All Python code use the PEP 8 style (version 1.7.*)
 
-#### Show
-`show <class name> <object id>`
-Ex:
-`show User my_id`
+## Testing
 
-#### Destroy
-`destroy <class name> <object id>`
-Ex:
-`destroy Place my_place_id`
+* All unittests can be executed with:
 
-#### All
-`all` or `all <class name>`
-Ex:
-`all` or `all State`
+```
+python3 -m unittest discover tests
+```
 
-#### Quit
-`quit` or `EOF`
+## Tasks
 
-#### Help
-`help` or `help <command>`
-Ex:
-`help` or `help quit`
 
-Additionally, the console supports `<class name>.<command>(<parameters>)` syntax.
-Ex:
-`City.show(my_city_id)`
+## Authors
+* [__Tu Vo__](https://github.com/tuvo1106)
