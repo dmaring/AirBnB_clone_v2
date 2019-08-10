@@ -42,3 +42,4 @@ python3 -m unittest discover tests
 
 ## Authors
 * [__Tu Vo__](https://github.com/tuvo1106)
+* [__Kevin Yook__](https://github.com/yook00627)
