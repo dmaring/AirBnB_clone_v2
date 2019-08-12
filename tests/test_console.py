@@ -236,9 +236,12 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(
                 "** value missing **\n", f.getvalue())
 
-    def test_create_with_args(self):
+    def test_create_BaseModel(self):
         """Test create method with optional arguments."""
-        pass
+        with patch("sys.stdout", new=StringIO()) as o:
+            self.consol.onecmd('create BaseModel name="Steve"')
+            print("o = " + str(o))
+            self.assertTrue(o is True)
 
     def test_create_valid_ids(self):
         """Test create method and id output"""

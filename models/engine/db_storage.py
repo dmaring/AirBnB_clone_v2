@@ -10,8 +10,8 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
-from sqlalchemy from create_engine
-from sqlachhemy.orm import sessionmaker, scoped_session
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, scoped_session
 
 import os
 
@@ -31,7 +31,7 @@ class DBStorage:
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}:3306/{}'
                                       .format(username, psw, host, db_name),
                                       pool_pre_ping=True)
-        Base.metadata.create_all(engine)
+        Base.metadata.create_all(self.__engine)
         Session = scoped_session(sessionmaker(bind=engine,
                                               expire_on_commit=False))
         self.__session = Session()
