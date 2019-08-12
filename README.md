@@ -39,12 +39,12 @@ python3 -m unittest discover tests
 
 ## Tasks
 
-### [ 0. Fork me if you can! ](./)
+### [ 0. Fork me if you can! ](./https://github.com/yook00627/AirBnb_clone)
 * For this project you will fork this codebase:
   * update the repository name to AirBnB_clone_v2
   * update the README.md with your information but don’t delete the initial authors
 
-### [ 1. Bug free! ]
+### [ 1. Bug free! ](./tests/)
 * All your unittests must pass without any errors at anytime in this project, with each storage engine!. Same for PEP8!
 
 ```sh
@@ -56,8 +56,8 @@ OK
 
 ### [ 2. Console improvements ](./console.py)
 * Update the def do_create(self, arg): function of your command interpreter (console.py) to allow for object creation with given parameters:
-  * Command syntax: create <Class name> <param 1> <param 2> <param 3>...
-  * Param syntax: <key name>=<value>
+  * Command syntax: create \<Class name> \<param 1> \<param 2> \<param 3>...
+  * Param syntax: \<key name>=\<value>
   * Value syntax:
     * String: "<value>" => starts with a double quote
       * any double quote inside the value must be escaped with a backslash \
@@ -222,7 +222,7 @@ remove the key \_sa\_instance_state from the dictionary returned by this method 
 * Update City: (models/city.py)
   * City inherits from BaseModel and Base (respect the order)
   * Add or replace in the class City:
-    * class attribute __tablename__ -
+    * class attribute \_\_tablename\_\_ -
       * represents the table name, cities
     * class attribute name
       * represents a column containing a string (128 characters)
@@ -235,7 +235,7 @@ remove the key \_sa\_instance_state from the dictionary returned by this method 
 * Update State: (models/state.py)
   * State inherits from BaseModel and Base (respect the order)
   * Add or replace in the class State:
-    * class attribute __tablename__
+    * class attribute \_\_tablename\_\_
     * represents the table name, states
     * class attribute name
     * represents a column containing a string (128 characters)
@@ -245,11 +245,11 @@ remove the key \_sa\_instance_state from the dictionary returned by this method 
 
 * New engine DBStorage: (models/engine/db_storage.py)
   * Private class attributes:
-    * __engine: set to None
-    * __session: set to None
+    * \_\_engine: set to None
+    * \_\_session: set to None
   * Public instance methods:
-    * __init__(self):
-      * create the engine (self.__engine)
+    * \_\_init\_\_(self):
+      * create the engine (self.\_\_engine)
       * the engine must be linked to the MySQL database and user created before (hbnb_dev and hbnb_dev_db):
         * dialect: mysql
         * driver: mysqldb
@@ -261,7 +261,7 @@ remove the key \_sa\_instance_state from the dictionary returned by this method 
       * don’t forget the option pool_pre_ping=True when you call create_engine
       * drop all tables if the environment variable HBNB_ENV is equal to test
     * all(self, cls=None):
-      * query on the current database session (self.__session) all objects depending of the class name (argument cls)
+      * query on the current database session (self \_\_session) all objects depending of the class name (argument cls)
       * if cls=None, query all types of objects (User, State, City, Amenity, Place and Review)
       * this method must return a dictionary: (like FileStorage)
         * key = <class-name>.<object-id>
@@ -335,7 +335,7 @@ updated_at: 2017-11-10 00:53:19
 * Update User: (models/user.py)
   * User inherits from BaseModel and Base (respect the order)
   * Add or replace in the class User:
-    * class attribute __tablename__
+    * class attribute \_\_tablename\_\_
       * represents the table name, users
     * class attribute email
       * represents a column containing a string (128 characters)
@@ -349,32 +349,33 @@ updated_at: 2017-11-10 00:53:19
     * class attribute last_name
       * represents a column containing a string (128 characters)
       * can be null
-```sh
-Update User: (models/user.py)
 
-User inherits from BaseModel and Base (respect the order)
-Add or replace in the class User:
-class attribute __tablename__
-represents the table name, users
-class attribute email
-represents a column containing a string (128 characters)
-can’t be null
-class attribute password
-represents a column containing a string (128 characters)
-can’t be null
-class attribute first_name
-represents a column containing a string (128 characters)
-can be null
-class attribute last_name
-represents a column containing a string (128 characters)
-can be null
+```sh
+guillaume@ubuntu:~/AirBnB_v2$ echo 'create User email="gui@hbtn.io" password="guipwd" first_name="Guillaume" last_name="Snow"' | HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db ./console.py 
+(hbnb) 4f3f4b42-a4c3-4c20-a492-efff10d00c0b
+(hbnb) 
+guillaume@ubuntu:~/AirBnB_v2$
+guillaume@ubuntu:~/AirBnB_v2$ echo 'all User' | HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db ./console.py 
+(hbnb) [[User] (4f3f4b42-a4c3-4c20-a492-efff10d00c0b) {'updated_at': datetime.datetime(2017, 11, 10, 1, 17, 26), 'id': '4f3f4b42-a4c3-4c20-a492-efff10d00c0b', 'last_name': 'Snow', 'first_name': 'Guillaume', 'email': 'gui@hbtn.io', 'created_at': datetime.datetime(2017, 11, 10, 1, 17, 26), 'password': 'f4ce007d8e84e0910fbdd7a06fa1692d'}]
+(hbnb) 
+guillaume@ubuntu:~/AirBnB_v2$
+guillaume@ubuntu:~/AirBnB_v2$ echo 'SELECT * FROM users\G' | mysql -uhbnb_dev -p hbnb_dev_db
+Enter password: 
+*************************** 1. row ***************************
+        id: 4f3f4b42-a4c3-4c20-a492-efff10d00c0b
+created_at: 2017-11-10 01:17:26
+updated_at: 2017-11-10 01:17:26
+     email: gui@hbtn.io
+  password: guipwd
+first_name: Guillaume
+ last_name: Snow
 ```
 
 ### [ 8. DBStorage - Place ](./models/place.py)
 * Update Place: (models/place.py)
   * Place inherits from BaseModel and Base (respect the order)
   * Add or replace in the class Place:
-    * class attribute __tablename__
+    * class attribute \_\_tablename\_\_
       * represents the table name, places
     * class attribute city_id
       * represents a column containing a string (60 characters)
@@ -450,7 +451,7 @@ number_bathrooms: 1
 * Update Review: (models/review.py)
   * Review inherits from BaseModel and Base (respect the order)
   * Add or replace in the class Review:
-    * class attribute __tablename__
+    * class attribute \_\_tablename\_\_
       * represents the table name, reviews
     * class attribute text
       * represents a column containing a string (1024 characters)
@@ -517,6 +518,124 @@ updated_at: 2017-11-10 04:06:25
     * for FileStorage:
       * Getter attribute amenities that returns the list of Amenity instances based on the attribute amenity_ids that contains all Amenity.id linked to the Place
       * Setter attribute amenities that handles append method for adding an Amenity.id to the attribute amenity_ids. This method should accept only Amenity object, otherwise, do nothing.
+
+```sh
+guillaume@ubuntu:~/AirBnB_v2$ cat main_place_amenities.py 
+#!/usr/bin/python3
+""" Test link Many-To-Many Place <> Amenity
+"""
+from models import *
+
+# creation of a State
+state = State(name="California")
+state.save()
+
+# creation of a City
+city = City(state_id=state.id, name="San Francisco")
+city.save()
+
+# creation of a User
+user = User(email="john@snow.com", password="johnpwd")
+user.save()
+
+# creation of 2 Places
+place_1 = Place(user_id=user.id, city_id=city.id, name="House 1")
+place_1.save()
+place_2 = Place(user_id=user.id, city_id=city.id, name="House 2")
+place_2.save()
+
+# creation of 3 various Amenity
+amenity_1 = Amenity(name="Wifi")
+amenity_1.save()
+amenity_2 = Amenity(name="Cable")
+amenity_2.save()
+amenity_3 = Amenity(name="Oven")
+amenity_3.save()
+
+# link place_1 with 2 amenities
+place_1.amenities.append(amenity_1)
+place_1.amenities.append(amenity_2)
+
+# link place_2 with 3 amenities
+place_2.amenities.append(amenity_1)
+place_2.amenities.append(amenity_2)
+place_2.amenities.append(amenity_3)
+
+storage.save()
+
+print("OK")
+
+guillaume@ubuntu:~/AirBnB_v2$ 
+guillaume@ubuntu:~/AirBnB_v2$ HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db ./main_place_amenities.py
+OK
+guillaume@ubuntu:~/AirBnB_v2$ 
+guillaume@ubuntu:~/AirBnB_v2$ echo 'SELECT * FROM amenities\G' | mysql -uhbnb_dev -p hbnb_dev_db
+Enter password: 
+*************************** 1. row ***************************
+        id: 47321eb8-152a-46df-969a-440aa67a6d59
+created_at: 2017-11-10 04:22:02
+updated_at: 2017-11-10 04:22:02
+      name: Cable
+*************************** 2. row ***************************
+        id: 4a307e7f-68f9-438f-81c0-8325898dda2a
+created_at: 2017-11-10 04:22:02
+updated_at: 2017-11-10 04:22:02
+      name: Oven
+*************************** 3. row ***************************
+        id: b80aec52-d0c9-420a-8471-3254572954b6
+created_at: 2017-11-10 04:22:02
+updated_at: 2017-11-10 04:22:02
+      name: Wifi
+guillaume@ubuntu:~/AirBnB_v2$ 
+guillaume@ubuntu:~/AirBnB_v2$ echo 'SELECT * FROM places\G' | mysql -uhbnb_dev -p hbnb_dev_db
+Enter password: 
+*************************** 1. row ***************************
+              id: 497e3867-d6e9-4401-9c7c-9687c18d2ac7
+      created_at: 2017-11-10 04:22:02
+      updated_at: 2017-11-10 04:22:02
+         city_id: 9d60df6e-31f7-430c-8162-69e89f4a17aa
+         user_id: 9b37bd51-6aef-485f-bf10-c7ab83fea2e9
+            name: House 1
+     description: NULL
+    number_rooms: 0
+number_bathrooms: 0
+       max_guest: 0
+  price_by_night: 0
+        latitude: NULL
+       longitude: NULL
+*************************** 2. row ***************************
+              id: db549ae1-4500-4d0c-9b50-4b4978ed229e
+      created_at: 2017-11-10 04:22:02
+      updated_at: 2017-11-10 04:22:02
+         city_id: 9d60df6e-31f7-430c-8162-69e89f4a17aa
+         user_id: 9b37bd51-6aef-485f-bf10-c7ab83fea2e9
+            name: House 2
+     description: NULL
+    number_rooms: 0
+number_bathrooms: 0
+       max_guest: 0
+  price_by_night: 0
+        latitude: NULL
+       longitude: NULL
+guillaume@ubuntu:~/AirBnB_v2$ 
+guillaume@ubuntu:~/AirBnB_v2$ echo 'SELECT * FROM place_amenity\G' | mysql -uhbnb_dev -p hbnb_dev_db
+Enter password: 
+*************************** 1. row ***************************
+  place_id: 497e3867-d6e9-4401-9c7c-9687c18d2ac7
+amenity_id: 47321eb8-152a-46df-969a-440aa67a6d59
+*************************** 2. row ***************************
+  place_id: db549ae1-4500-4d0c-9b50-4b4978ed229e
+amenity_id: 47321eb8-152a-46df-969a-440aa67a6d59
+*************************** 3. row ***************************
+  place_id: db549ae1-4500-4d0c-9b50-4b4978ed229e
+amenity_id: 4a307e7f-68f9-438f-81c0-8325898dda2a
+*************************** 4. row ***************************
+  place_id: 497e3867-d6e9-4401-9c7c-9687c18d2ac7
+amenity_id: b80aec52-d0c9-420a-8471-3254572954b6
+*************************** 5. row ***************************
+  place_id: db549ae1-4500-4d0c-9b50-4b4978ed229e
+amenity_id: b80aec52-d0c9-420a-8471-3254572954b6
+```
 
 ## Authors
 * [__Tu Vo__](https://github.com/tuvo1106)
