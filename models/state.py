@@ -4,11 +4,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String
 import os
+from models.base_model import BaseModel, Base
 
 
-Base = declarative_base()
-
-class State(Base):
+class State(BaseModel, Base):
     """This is the class for State
     Attributes:
         name: input name

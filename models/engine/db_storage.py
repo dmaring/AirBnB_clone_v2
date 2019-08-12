@@ -32,7 +32,7 @@ class DBStorage:
                                       .format(username, psw, host, db_name),
                                       pool_pre_ping=True)
         Base.metadata.create_all(self.__engine)
-        Session = scoped_session(sessionmaker(bind=engine,
+        Session = scoped_session(sessionmaker(bind=self.__engine,
                                               expire_on_commit=False))
         self.__session = Session()
         if os.getenv('HBNB_ENV') == 'test':
@@ -71,10 +71,14 @@ class DBStorage:
 
     def reload(self):
         """Creates all tables in the database"""
+        username = os.getenv('HBNB_MYSQL_USER')
+        psw = os.getenv('HBNB_MYSQL_PWD')
+        host = os.getenv('HBNB_MYSQL_HOST')
+        db_name = os.getenv('HBNB_MYSQL_DB')
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}:3306/{}'
                                       .format(username, psw, host, db_name),
                                       pool_pre_ping=True)
-        Base.metadata.create_all(engine)
-        Session = scoped_session(sessionmaker(bind=engine,
+        Base.metadata.create_all(self.__engine)
+        Session = scoped_session(sessionmaker(bind=self.__engine,
                                               expire_on_commit=False))
         self.__session = Session()
