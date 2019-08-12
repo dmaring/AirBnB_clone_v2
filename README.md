@@ -39,7 +39,7 @@ python3 -m unittest discover tests
 
 ## Tasks
 
-### [ 0. Fork me if you can! ](./https://github.com/yook00627/AirBnb_clone)
+### [ 0. Fork me if you can! ](https://github.com/yook00627/AirBnb_clone)
 * For this project you will fork this codebase:
   * update the repository name to AirBnB_clone_v2
   * update the README.md with your information but don’t delete the initial authors
