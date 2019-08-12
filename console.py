@@ -140,7 +140,6 @@ class HBNBCommand(cmd.Cmd):
                 raise NameError()
             for key in objects:
                 name = key.split('.')
-                print("name = " + str(name))
                 if name[0] == args[0]:
                     my_list.append(objects[key])
             print(my_list)

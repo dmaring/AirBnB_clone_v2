@@ -82,5 +82,4 @@ class BaseModel:
         my_dict["updated_at"] = self.updated_at.isoformat()
         if "_sa_instance_state" in my_dict:
             del(my_dict['_sa_instance_state'])
-        print(my_dict)
         return my_dict
