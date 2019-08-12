@@ -95,6 +95,10 @@ class TestFileStorage(unittest.TestCase):
         """Test delete method"""
         pass
 
+    def test_delete_with_args(self):
+        """Test delete method with arguments"""
+        pass
+
     def test_all_with_args(self):
         """Test all method with optional arguments"""
         pass
