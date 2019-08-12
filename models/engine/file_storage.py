@@ -72,3 +72,7 @@ class FileStorage:
                 if k.split('.')[1] == obj.id:
                     del self.all()[k]
             self.save()
+
+    def reset(self):
+        """Reset all objects in __objects"""
+        self.__objects = {}

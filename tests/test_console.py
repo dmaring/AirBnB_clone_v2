@@ -8,6 +8,7 @@ import os
 import json
 import console
 import tests
+import re
 from console import HBNBCommand
 from models.base_model import BaseModel
 from models.user import User
@@ -17,15 +18,17 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from models.engine.file_storage import FileStorage
+from models import storage
 
 
 class TestConsole(unittest.TestCase):
     """this will test the console"""
 
     @classmethod
-    def setUpClass(cls):
+    def setUp(cls):
         """setup for the test"""
         cls.consol = HBNBCommand()
+        storage.reset()
 
     @classmethod
     def teardown(cls):
@@ -220,6 +223,7 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(
                 "** no instance found **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("create User")
             self.consol.onecmd("all User")
             obj = f.getvalue()
         my_id = obj[obj.find('(')+1:obj.find(')')]
@@ -234,6 +238,68 @@ class TestConsole(unittest.TestCase):
 
     def test_create_with_args(self):
         """Test create method with optional arguments."""
+        pass
+
+    def test_create_valid_ids(self):
+        """Test create method and id output"""
+        with patch("sys.stdout", new=StringIO()) as o:
+            self.consol.onecmd("create BaseModel")
+            i_d = o.getvalue()
+            p = r'(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})'
+            prog = re.compile(p)
+            match = prog.match(i_d)
+            self.assertTrue(match is not None)
+
+        with patch("sys.stdout", new=StringIO()) as o:
+            self.consol.onecmd("create User")
+            i_d = o.getvalue()
+            p = r'(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})'
+            prog = re.compile(p)
+            match = prog.match(i_d)
+            self.assertTrue(match is not None)
+
+        with patch("sys.stdout", new=StringIO()) as o:
+            self.consol.onecmd("create State")
+            i_d = o.getvalue()
+            p = r'(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})'
+            prog = re.compile(p)
+            match = prog.match(i_d)
+            self.assertTrue(match is not None)
+
+        with patch("sys.stdout", new=StringIO()) as o:
+            self.consol.onecmd("create City")
+            i_d = o.getvalue()
+            p = r'(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})'
+            prog = re.compile(p)
+            match = prog.match(i_d)
+            self.assertTrue(match is not None)
+
+        with patch("sys.stdout", new=StringIO()) as o:
+            self.consol.onecmd("create Amenity")
+            i_d = o.getvalue()
+            p = r'(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})'
+            prog = re.compile(p)
+            match = prog.match(i_d)
+            self.assertTrue(match is not None)
+
+        with patch("sys.stdout", new=StringIO()) as o:
+            self.consol.onecmd("create Place")
+            i_d = o.getvalue()
+            p = r'(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})'
+            prog = re.compile(p)
+            match = prog.match(i_d)
+            self.assertTrue(match is not None)
+
+        with patch("sys.stdout", new=StringIO()) as o:
+            self.consol.onecmd("create Review")
+            i_d = o.getvalue()
+            p = r'(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})'
+            prog = re.compile(p)
+            match = prog.match(i_d)
+            self.assertTrue(match is not None)
+
+    def test_03_destroy_errors(self):
+        """Test to validate destroy errors."""
         pass
 
 
