@@ -31,18 +31,13 @@ class DBStorage:
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}:3306/{}'
                                       .format(username, psw, host, db_name),
                                       pool_pre_ping=True)
-        Base.metadata.create_all(self.__engine)
-        Session = scoped_session(sessionmaker(bind=self.__engine,
-                                              expire_on_commit=False))
-        self.__session = Session()
         if os.getenv('HBNB_ENV') == 'test':
-            # drop tables
-            pass
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """Retrieve all objects from database"""
         _dict = {}
-        if cls == None:
+        if cls is None:
             objs = self.__session.query('User',
                                         'State',
                                         'City',
@@ -52,7 +47,7 @@ class DBStorage:
             objs = self.__session.query(cls).all()
         for obj in objs:
             key = obj.name + "." + str(obj.id)
-            _dict[key] = obj.to_dict()
+            _dict[key] = obj
         return _dict
 
     def new(self, obj):
@@ -71,13 +66,6 @@ class DBStorage:
 
     def reload(self):
         """Creates all tables in the database"""
-        username = os.getenv('HBNB_MYSQL_USER')
-        psw = os.getenv('HBNB_MYSQL_PWD')
-        host = os.getenv('HBNB_MYSQL_HOST')
-        db_name = os.getenv('HBNB_MYSQL_DB')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}:3306/{}'
-                                      .format(username, psw, host, db_name),
-                                      pool_pre_ping=True)
         Base.metadata.create_all(self.__engine)
         Session = scoped_session(sessionmaker(bind=self.__engine,
                                               expire_on_commit=False))

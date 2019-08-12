@@ -69,7 +69,6 @@ class FileStorage:
         if obj:
             copy = dict(self.all())
             for k in copy.keys():
-                print("k = " + str(k))
                 if k.split('.')[1] == obj.id:
                     del self.all()[k]
             self.save()

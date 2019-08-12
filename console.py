@@ -134,22 +134,18 @@ class HBNBCommand(cmd.Cmd):
             for key in objects:
                 my_list.append(objects[key])
             return
-        # try:
-        args = line.split(" ")
-        if args[0] not in self.all_classes:
-            raise NameError()
-        for k, v in objects.items():
-            name = v['__class__']
-            print()
-            print(v)
-            print()
-            # if name == args[0]:
-            #     my_list.append(objects[k])
-            v = eval(v["__class__"])(**v)
-            my_list.append(v)
-        print(my_list)
-        # except NameError:
-        #     print("** class doesn't exist **")
+        try:
+            args = line.split(" ")
+            if args[0] not in self.all_classes:
+                raise NameError()
+            for key in objects:
+                name = key.split('.')
+                print("name = " + str(name))
+                if name[0] == args[0]:
+                    my_list.append(objects[key])
+            print(my_list)
+        except NameError:
+            print("** class doesn't exist **")
 
     def do_update(self, line):
         """Updates an instanceby adding or updating attribute

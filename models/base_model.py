@@ -16,8 +16,7 @@ class BaseModel:
 
     id = Column(String(60),
                 primary_key=True,
-                nullable=False,
-                default=str(uuid.uuid4()))
+                nullable=False)
 
     created_at = Column(DateTime,
                         nullable=False,
@@ -41,7 +40,7 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                if key != "__class__":
+                if key != "__class__" and hasattr(self, key):
                     setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
@@ -53,7 +52,7 @@ class BaseModel:
             returns a string of class name, id, and dictionary
         """
         return "[{}] ({}) {}".format(
-            type(self).__name__, self.id, self.__dict__)
+            type(self).__name__, self.id, self.to_dict())
 
     def __repr__(self):
         """return a string representaion
@@ -83,4 +82,5 @@ class BaseModel:
         my_dict["updated_at"] = self.updated_at.isoformat()
         if "_sa_instance_state" in my_dict:
             del(my_dict['_sa_instance_state'])
+        print(my_dict)
         return my_dict
