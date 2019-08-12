@@ -139,9 +139,13 @@ class HBNBCommand(cmd.Cmd):
         if args[0] not in self.all_classes:
             raise NameError()
         for k, v in objects.items():
-            name = v.__class__
+            name = v['__class__']
+            print()
+            print(v)
+            print()
             # if name == args[0]:
             #     my_list.append(objects[k])
+            v = eval(v["__class__"])(**v)
             my_list.append(v)
         print(my_list)
         # except NameError:
