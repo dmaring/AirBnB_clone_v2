@@ -13,7 +13,7 @@
 | Web framework - templating 	| Web server deployment in Python 	|
 | RESTful API 	| JSON web interface to display all objects 	|
 | Web dynamic 	| Loading of objects from client side using Jquery/RESTful API 	|
----
+
 Example of final product:
 <p align="center">
   <img src="https://s3.amazonaws.com/intranet-projects-files/holbertonschool-higher-level_programming+/268/8-index.png">
@@ -30,7 +30,6 @@ Example of final product:
 * All Python code use the PEP 8 style (version 1.7.*)
 
 ## Testing
-
 * All unittests can be executed with:
 
 ```
@@ -521,6 +520,8 @@ updated_at: 2017-11-10 04:06:25
 
 ```sh
 guillaume@ubuntu:~/AirBnB_v2$ cat main_place_amenities.py 
+```
+```python
 #!/usr/bin/python3
 """ Test link Many-To-Many Place <> Amenity
 """
@@ -564,7 +565,8 @@ place_2.amenities.append(amenity_3)
 storage.save()
 
 print("OK")
-
+```
+```sh
 guillaume@ubuntu:~/AirBnB_v2$ 
 guillaume@ubuntu:~/AirBnB_v2$ HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db ./main_place_amenities.py
 OK
