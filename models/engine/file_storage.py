@@ -25,7 +25,6 @@ class FileStorage:
         Return:
             returns a dictionary of __object
         """
-        print("IN FILE")
         if cls:
             _dict = {}
             for k, v in self.__objects.items():

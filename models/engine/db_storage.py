@@ -36,7 +36,6 @@ class DBStorage:
 
     def all(self, cls=None):
         """Retrieve all objects from database"""
-        print("IN DB")
         _dict = {}
         if cls is None:
             objs = []
