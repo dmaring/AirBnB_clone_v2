@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, Table
 import os
 
-place_amenity = Table('association', Base.metadata,
+place_amenity = Table('place_amenity', Base.metadata,
                       Column('place_id',
                              String(60),
                              ForeignKey('places.id'),

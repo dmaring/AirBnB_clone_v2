@@ -42,7 +42,6 @@ class BaseModel:
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
                 if key != "__class__" and hasattr(self, key):
                     setattr(self, key, value)
-            print("setting id")
             if self.id is None:
                 setattr(self, 'id', str(uuid.uuid4()))
             now = datetime.now()
