@@ -125,24 +125,27 @@ class HBNBCommand(cmd.Cmd):
         Exceptions:
             NameError: when there is no object taht has the name
         """
-        objects = storage.all()
+        if line:
+            objects = storage.all(eval(line))
+        else:
+            objects = storage.all()
         my_list = []
         if not line:
             for key in objects:
                 my_list.append(objects[key])
-            print(my_list)
             return
-        try:
-            args = line.split(" ")
-            if args[0] not in self.all_classes:
-                raise NameError()
-            for key in objects:
-                name = key.split('.')
-                if name[0] == args[0]:
-                    my_list.append(objects[key])
-            print(my_list)
-        except NameError:
-            print("** class doesn't exist **")
+        # try:
+        args = line.split(" ")
+        if args[0] not in self.all_classes:
+            raise NameError()
+        for k, v in objects.items():
+            name = v.__class__
+            # if name == args[0]:
+            #     my_list.append(objects[k])
+            my_list.append(v)
+        print(my_list)
+        # except NameError:
+        #     print("** class doesn't exist **")
 
     def do_update(self, line):
         """Updates an instanceby adding or updating attribute

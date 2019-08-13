@@ -42,7 +42,7 @@ class DBStorage:
     def all(self, cls=None):
         """Retrieve all objects from database"""
         _dict = {}
-        if not cls:
+        if cls == None:
             objs = self.__session.query('User',
                                         'State',
                                         'City',
@@ -51,8 +51,8 @@ class DBStorage:
         else:
             objs = self.__session.query(cls).all()
         for obj in objs:
-            key = obj.name + "." + obj.id
-            _dict[key] = obj
+            key = obj.name + "." + str(obj.id)
+            _dict[key] = obj.to_dict()
         return _dict
 
     def new(self, obj):
