@@ -9,6 +9,7 @@ import json
 import console
 import tests
 import re
+import MySQLdb
 from console import HBNBCommand
 from models.base_model import BaseModel
 from models.user import User
@@ -21,6 +22,8 @@ from models.engine.file_storage import FileStorage
 from models import storage
 
 
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                                                "Skipping if storage is in database")
 class TestConsole(unittest.TestCase):
     """this will test the console"""
 
@@ -236,73 +239,41 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(
                 "** value missing **\n", f.getvalue())
 
-    def test_create_BaseModel(self):
-        """Test create method with optional arguments."""
-        with patch("sys.stdout", new=StringIO()) as o:
-            self.consol.onecmd('create BaseModel name="Steve"')
-            self.assertTrue(o.getvalue())
 
-    def test_create_valid_ids(self):
-        """Test create method and id output"""
-        with patch("sys.stdout", new=StringIO()) as o:
-            self.consol.onecmd("create BaseModel")
-            i_d = o.getvalue()
-            p = r'(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})'
-            prog = re.compile(p)
-            match = prog.match(i_d)
-            self.assertTrue(match is not None)
+class TestConsoleWithDB(unittest.TestCase):
+    """this will test the console"""
 
-        with patch("sys.stdout", new=StringIO()) as o:
-            self.consol.onecmd("create User")
-            i_d = o.getvalue()
-            p = r'(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})'
-            prog = re.compile(p)
-            match = prog.match(i_d)
-            self.assertTrue(match is not None)
+    @classmethod
+    def setUp(cls):
+        """setup for the test"""
+        cls.consol = HBNBCommand()
+        username = os.getenv('HBNB_MYSQL_USER')
+        psw = os.getenv('HBNB_MYSQL_PWD')
+        db_name = os.getenv('HBNB_MYSQL_DB')
+        host = os.getenv('HBNB_MYSQL_HOST')
 
-        with patch("sys.stdout", new=StringIO()) as o:
-            self.consol.onecmd("create State")
-            i_d = o.getvalue()
-            p = r'(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})'
-            prog = re.compile(p)
-            match = prog.match(i_d)
-            self.assertTrue(match is not None)
+        db = MySQLdb.connect(host=host,
+                             port=3306,
+                             user=username,
+                             passwd=psw,
+                             db=db_name,
+                             charset="utf8")
+        cur = db.cursor()
 
-        with patch("sys.stdout", new=StringIO()) as o:
-            self.consol.onecmd("create City")
-            i_d = o.getvalue()
-            p = r'(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})'
-            prog = re.compile(p)
-            match = prog.match(i_d)
-            self.assertTrue(match is not None)
+    @classmethod
+    def tearDown(cls):
+        """at the end of the test this will tear it down"""
+        cur.close()
+        db.close()
+        del cls.consol
 
-        with patch("sys.stdout", new=StringIO()) as o:
-            self.consol.onecmd("create Amenity")
-            i_d = o.getvalue()
-            p = r'(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})'
-            prog = re.compile(p)
-            match = prog.match(i_d)
-            self.assertTrue(match is not None)
-
-        with patch("sys.stdout", new=StringIO()) as o:
-            self.consol.onecmd("create Place")
-            i_d = o.getvalue()
-            p = r'(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})'
-            prog = re.compile(p)
-            match = prog.match(i_d)
-            self.assertTrue(match is not None)
-
-        with patch("sys.stdout", new=StringIO()) as o:
-            self.consol.onecmd("create Review")
-            i_d = o.getvalue()
-            p = r'(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})'
-            prog = re.compile(p)
-            match = prog.match(i_d)
-            self.assertTrue(match is not None)
-
-    def test_03_destroy_errors(self):
-        """Test to validate destroy errors."""
-        pass
+    def test_create(self):
+        """Test to create in DB"""
+        cur.execute("SELECT * FROM states WHERE ")
+        rows = cur.fetchall()
+        for row in rows:
+            print(row)
+        self.assertTrue(row, False)
 
 
 if __name__ == "__main__":
