@@ -2,13 +2,13 @@
 """This is the amenity class"""
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, ForeignKey, Table
-from sqlalchemy.org import relationship
+from sqlalchemy.orm import relationship
 
 
-association_table = Table('association', Base.metadata,
-        Column(),
-        Column()
-        )
+# association_table = Table('association', Base.metadata,
+#        Column(),
+#        Column()
+#        )
 
 
 class Amenity(BaseModel, Base):
@@ -22,4 +22,4 @@ class Amenity(BaseModel, Base):
     name = Column(String(128),
                   nullable=False)
 
-    place_amenities = 
+    # place_amenities =
