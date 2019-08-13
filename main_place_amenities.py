@@ -5,6 +5,7 @@ from models import *
 
 # creation of a State
 state = State(name="California")
+print(state)
 state.save()
 
 # creation of a City
