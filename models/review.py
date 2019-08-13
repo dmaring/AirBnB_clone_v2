@@ -22,5 +22,5 @@ class Review(BaseModel, Base):
                       ForeignKey('places.id'),
                       nullable=False)
     user_id = Column(String(60),
-                      ForeignKey('users.id'),
-                      nullable=False)
+                     ForeignKey('users.id'),
+                     nullable=False)
