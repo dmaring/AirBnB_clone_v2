@@ -240,8 +240,7 @@ class TestConsole(unittest.TestCase):
         """Test create method with optional arguments."""
         with patch("sys.stdout", new=StringIO()) as o:
             self.consol.onecmd('create BaseModel name="Steve"')
-            print("o = " + str(o))
-            self.assertTrue(o is True)
+            self.assertTrue(o.getvalue())
 
     def test_create_valid_ids(self):
         """Test create method and id output"""

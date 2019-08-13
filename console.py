@@ -125,7 +125,7 @@ class HBNBCommand(cmd.Cmd):
         Exceptions:
             NameError: when there is no object taht has the name
         """
-        if line:
+        if line and line in self.all_classes:
             objects = storage.all(eval(line))
         else:
             objects = storage.all()
