@@ -127,18 +127,22 @@ class HBNBCommand(cmd.Cmd):
         """
         if line and line in self.all_classes:
             objects = storage.all(eval(line))
-        else:
-            objects = storage.all()
-        my_list = []
-        if not line:
-            for key in objects:
-                my_list.append(objects[key])
-            return
-        try:
             args = line.split(" ")
             if args[0] not in self.all_classes:
                 raise NameError()
+        elif line is None:
+            print("HERE")
+            objects = storage.all()
+        else:
+            return
+        my_list = []
+        # if not line:
+        #    for key in objects:
+        #        my_list.append(objects[key])
+        #    return
+        try:
             for key in objects:
+                print(key)
                 name = key.split('.')
                 if name[0] == args[0]:
                     my_list.append(objects[key])
