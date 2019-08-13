@@ -2,8 +2,20 @@
 """This is the place class"""
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, String, Float, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, Table
 import os
+
+place_amenity = Table('association', Base.metadata,
+                      Column('place_id',
+                             String(60),
+                             ForeignKey('places.id'),
+                             primary_key=True,
+                             nullable=False),
+                      Column('amenity_id',
+                             String(60),
+                             ForeignKey('amenities.id'),
+                             primary_key=True,
+                             nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -64,7 +76,25 @@ class Place(BaseModel, Base):
                            backref="place",
                            cascade="all, delete-orphan")
 
-    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    amenity_ids = []
+
+    if os.getenv('HBNB_TYPE_STORAGE') == 'file':
+        @property
+        def amenities(self):
+            """Returns the list of Amenity instances"""
+            _list = []
+            for obj in amenity_ids:
+                if obj.id == self.id:
+                    _list.append(obj)
+            return _list
+
+        @amenities.setter
+        def amenities(self, obj):
+            """Adds an Amenity.id to the attribute amenity_ids"""
+            if type(obj).__name__ == 'Amenity':
+                self.amenity_ids.append(obj)
+
+    elif os.getenv('HBNB_TYPE_STORAGE') == 'db':
         @property
         def reviews(self):
             _list = []
@@ -72,3 +102,7 @@ class Place(BaseModel, Base):
                 if review.place_id == self.id:
                     _list.append(review)
             return(_list)
+
+        amenities = relationship("Amenity",
+                                 secondary=place_amenity,
+                                 back_populates="places")
