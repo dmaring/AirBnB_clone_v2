@@ -18,13 +18,17 @@ class User(BaseModel, Base):
     __tablename__ = 'users'
 
     email = Column(String(128),
-                   nullable=False)
+                   nullable=False,
+                   default="")
 
     password = Column(String(128),
-                   nullable=False)
+                      nullable=False,
+                      default="")
 
     first_name = Column(String(128),
-                   nullable=False)
+                        nullable=False,
+                        default="")
 
     last_name =  Column(String(128),
-                   nullable=False)
+                        nullable=False,
+                        default="")
