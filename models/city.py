@@ -2,8 +2,7 @@
 """This is the city class"""
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, ForeignKey
-#from models.state import State
-#from models.place import Place
+# from models.state import State
 from sqlalchemy.orm import relationship
 
 
@@ -24,5 +23,5 @@ class City(BaseModel, Base):
                       nullable=False)
 
     places = relationship("Place",
-                          backref="city",
+                          backref="cities",
                           cascade="all, delete-orphan")
