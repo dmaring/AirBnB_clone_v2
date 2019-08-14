@@ -29,6 +29,7 @@ class TestConsole(unittest.TestCase):
     def setUp(cls):
         """setup for the test"""
         cls.consol = HBNBCommand()
+        storage.reset()
 
     @classmethod
     def teardown(cls):
@@ -106,11 +107,11 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("show BaseModel")
             self.assertEqual(
-                "** instance id missing **", f.getvalue())
+                "** instance id missing **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("show BaseModel abcd-123")
             self.assertEqual(
-                "** no instance found **", f.getvalue())
+                "** no instance found **\n", f.getvalue())
 
     def test_destroy(self):
         """Test destroy command inpout"""
@@ -176,14 +177,13 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("asdfsdfsd.all()")
             self.assertEqual(
-                "** class doesn't exist **", f.getvalue())
+                "** class doesn't exist **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("State.all()")
             self.assertEqual("[]\n", f.getvalue())
 
     def test_z_count(self):
         """Test count command inpout"""
-        cls.consol.reset()
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("asdfsdfsd.count()")
             self.assertEqual(
@@ -237,43 +237,3 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("User.update(" + my_id + ", name)")
             self.assertEqual(
                 "** value missing **\n", f.getvalue())
-
-
-class TestConsoleWithDB(unittest.TestCase):
-    """this will test the console"""
-
-    @classmethod
-    def setUp(cls):
-        """setup for the test"""
-        cls.consol = HBNBCommand()
-        username = os.getenv('HBNB_MYSQL_USER')
-        psw = os.getenv('HBNB_MYSQL_PWD')
-        db_name = os.getenv('HBNB_MYSQL_DB')
-        host = os.getenv('HBNB_MYSQL_HOST')
-
-        db = MySQLdb.connect(host=host,
-                             port=3306,
-                             user=username,
-                             passwd=psw,
-                             db=db_name,
-                             charset="utf8")
-        cur = db.cursor()
-
-    @classmethod
-    def tearDown(cls):
-        """at the end of the test this will tear it down"""
-        cur.close()
-        db.close()
-        del cls.consol
-
-    def test_create(self):
-        """Test to create in DB"""
-        cur.execute("SELECT * FROM states")
-        rows = cur.fetchall()
-        for row in rows:
-            print(row)
-        self.assertTrue(row, False)
-
-
-if __name__ == "__main__":
-    unittest.main()
