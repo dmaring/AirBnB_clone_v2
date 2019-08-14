@@ -23,7 +23,7 @@ from models import storage
 
 
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                                                "Skipping if storage is in database")
+                 "Skip if storage is db")
 class TestConsole(unittest.TestCase):
     """this will test the console"""
 
@@ -89,11 +89,11 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(
                 "** class doesn't exist **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("create User")
+            self.consol.onecmd("create State")
         with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("all User")
+            self.consol.onecmd("all State")
             self.assertEqual(
-                "[[User]", f.getvalue()[:7])
+                "[[State]", f.getvalue()[:7])
 
     def test_show(self):
         """Test show command inpout"""
@@ -269,7 +269,7 @@ class TestConsoleWithDB(unittest.TestCase):
 
     def test_create(self):
         """Test to create in DB"""
-        cur.execute("SELECT * FROM states WHERE ")
+        cur.execute("SELECT * FROM states")
         rows = cur.fetchall()
         for row in rows:
             print(row)

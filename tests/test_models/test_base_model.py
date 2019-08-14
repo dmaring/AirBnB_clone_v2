@@ -10,20 +10,15 @@ class TestBaseModel(unittest.TestCase):
     """this will test the base model class"""
 
     @classmethod
-    def setUpClass(cls):
+    def setUp(cls):
         """setup for the test"""
         cls.base = BaseModel()
-        cls.base.name = "Kev"
-        cls.base.num = 20
 
     @classmethod
-    def teardown(cls):
-        """at the end of the test this will tear it down"""
-        del cls.base
-
     def tearDown(self):
         """teardown"""
         try:
+            cls.base.delete()
             os.remove("file.json")
         except Exception:
             pass

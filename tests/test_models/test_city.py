@@ -13,9 +13,13 @@ class TestCity(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """set up for test"""
-        cls.city = City()
-        cls.city.name = "LA"
-        cls.city.state_id = "CA"
+        # creation of a State
+        state = State(name="California")
+        state.save()
+
+        # creation of a City
+        city = City(state_id=state.id, name="San Francisco")
+        city.save()
 
     @classmethod
     def teardown(cls):
