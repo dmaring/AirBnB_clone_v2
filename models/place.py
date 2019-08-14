@@ -104,5 +104,4 @@ class Place(BaseModel, Base):
             return(_list)
 
         amenities = relationship("Amenity",
-                                 secondary=place_amenity,
-                                 backref="places")
+                                 secondary=place_amenity)

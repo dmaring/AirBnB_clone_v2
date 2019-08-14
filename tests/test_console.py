@@ -29,6 +29,7 @@ class TestConsole(unittest.TestCase):
     def setUp(cls):
         """setup for the test"""
         cls.consol = HBNBCommand()
+        # if type(storage).__name__ == 'FileStorage':
         storage.reset()
 
     @classmethod
@@ -76,7 +77,6 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("quit")
             self.assertEqual('', f.getvalue())
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "db")
     def test_create(self):
         """Test create command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -88,7 +88,7 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(
                 "** class doesn't exist **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("create State")
+            self.consol.onecmd('create State name="California"')
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all State")
             self.assertEqual(
@@ -221,19 +221,19 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(
                 "** class doesn't exist **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("User.update(12345)")
+            self.consol.onecmd("State.update(12345)")
             self.assertEqual(
                 "** no instance found **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("create User")
+            self.consol.onecmd('create State name="Utah"')
             self.consol.onecmd("all User")
             obj = f.getvalue()
         my_id = obj[obj.find('(')+1:obj.find(')')]
         with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("User.update(" + my_id + ")")
-            self.assertEqual(
-                "** attribute name missing **\n", f.getvalue())
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("User.update(" + my_id + ", name)")
+            self.consol.onecmd("State.update(" + my_id + ")")
             self.assertEqual(
                 "** value missing **\n", f.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("State.update(" + my_id + ", name)")
+            self.assertEqual(
+                "", f.getvalue())
