@@ -129,16 +129,12 @@ class HBNBCommand(cmd.Cmd):
             objects = storage.all(eval(line))
             args = line.split(" ")
             if args[0] not in self.all_classes:
-                raise NameError()
+                raise NameError("** class doesn't exist **")
         elif line is "":
             objects = storage.all()
         else:
             return
         my_list = []
-        # if not line:
-        #    for key in objects:
-        #        my_list.append(objects[key])
-        #    return
         for key in objects:
             my_list.append(objects[key])
         print(my_list)

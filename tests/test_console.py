@@ -22,8 +22,6 @@ from models.engine.file_storage import FileStorage
 from models import storage
 
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                 "Skip if storage is db")
 class TestConsole(unittest.TestCase):
     """this will test the console"""
 
@@ -31,7 +29,6 @@ class TestConsole(unittest.TestCase):
     def setUp(cls):
         """setup for the test"""
         cls.consol = HBNBCommand()
-        storage.reset()
 
     @classmethod
     def teardown(cls):
@@ -78,6 +75,7 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("quit")
             self.assertEqual('', f.getvalue())
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "db")
     def test_create(self):
         """Test create command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -93,7 +91,7 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all State")
             self.assertEqual(
-                "[[State]", f.getvalue()[:7])
+                "[[State]", f.getvalue()[:8])
 
     def test_show(self):
         """Test show command inpout"""
@@ -108,11 +106,11 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("show BaseModel")
             self.assertEqual(
-                "** instance id missing **\n", f.getvalue())
+                "** instance id missing **", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("show BaseModel abcd-123")
             self.assertEqual(
-                "** no instance found **\n", f.getvalue())
+                "** no instance found **", f.getvalue())
 
     def test_destroy(self):
         """Test destroy command inpout"""
@@ -178,13 +176,14 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("asdfsdfsd.all()")
             self.assertEqual(
-                "** class doesn't exist **\n", f.getvalue())
+                "** class doesn't exist **", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("State.all()")
             self.assertEqual("[]\n", f.getvalue())
 
     def test_z_count(self):
         """Test count command inpout"""
+        cls.consol.reset()
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("asdfsdfsd.count()")
             self.assertEqual(
