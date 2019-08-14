@@ -29,7 +29,6 @@ class TestConsole(unittest.TestCase):
     def setUp(cls):
         """setup for the test"""
         cls.consol = HBNBCommand()
-        # if type(storage).__name__ == 'FileStorage':
         storage.reset()
 
     @classmethod
