@@ -11,16 +11,17 @@ env.hosts = ['35.231.178.39', '34.73.236.42']
 env.user = 'ubuntu'
 env.key_filename = '~/.ssh/id_rsa'
 
+
 def do_deploy(archive_path):
     """
     Function that that distributes an archive to web servers
     """
 
     if not os.path.exists(archive_path):
-        return(False)
-    base_name=os.path.basename(archive_path)
-    name=base_name.split(".")[0]
-    with settings(abort_exception = FabricException):
+        return False
+    base_name = os.path.basename(archive_path)
+    name = base_name.split(".")[0]
+    with settings(abort_exception=FabricException):
         try:
             put(archive_path, "/tmp")
             sudo("mkdir -p /data/web_static/releases/{}".format(name))
