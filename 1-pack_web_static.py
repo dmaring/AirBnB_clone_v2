@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
 Python fabric module to archive a static website into .tgz file
 """
