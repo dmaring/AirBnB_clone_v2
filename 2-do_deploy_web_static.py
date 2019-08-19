@@ -20,13 +20,17 @@ def do_deploy(archive_path):
         return(False)
     base_name=os.path.basename(archive_path)
     name=base_name.split(".")[0]
-    put(archive_path, "/tmp")
-    sudo("mkdir -p /data/web_static/releases/{}".format(name))
-    sudo("tar -xzf /tmp/{} -C /data/web_static/releases/{}/"
-         .format(base_name, name))
-    sudo("rm /tmp/{}".format(base_name))
-    sudo("rm /data/web_static/current")
-    sudo("ln -fs /data/web_static/releases/{} /data/web_static/current"
-         .format(name))
-    sudo("service nginx restart")
+    with settings(abort_exception = FabricException):
+        try:
+            put(archive_path, "/tmp")
+            sudo("mkdir -p /data/web_static/releases/{}".format(name))
+            sudo("tar -xzf /tmp/{} -C /data/web_static/releases/{}/"
+                 .format(base_name, name))
+            sudo("rm /tmp/{}".format(base_name))
+            sudo("rm /data/web_static/current")
+            sudo("ln -fs /data/web_static/releases/{} /data/web_static/current"
+                 .format(name))
+            sudo("service nginx restart")
+        except FabricException:
+            return(False)
     return(True)
