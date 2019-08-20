@@ -16,7 +16,7 @@ def do_pack():
         os.makedirs('versions')
     curr_time = datetime.now().strftime('%Y%m%d%H%M%S')
     name_time = "versions/web_static_{}.tgz".format(curr_time)
-    command = "tar -czvf {} web_static".format(name_time)
+    command = "tar -czvf {} -C web_static .".format(name_time)
     result = local(command)
     if result.failed:
         return(None)
