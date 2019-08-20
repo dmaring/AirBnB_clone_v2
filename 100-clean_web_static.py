@@ -75,7 +75,6 @@ def do_clean(number=0):
     else:
         _number = _number + 1
 
-    # local("ls -t versions | tail -n +{} | xargs rm --".format(_number))
     cwd = os.getcwd()
     os.chdir("".join([cwd, "/versions"]))
     with settings(abort_exception=Exception):
@@ -88,28 +87,3 @@ def do_clean(number=0):
     with cd('/data/web_static/releases'):
         sudo("ls -t | grep web_static_ | tail -n +{} | xargs rm -R"
              .format(_number))
-
-    # time_list = []
-    # # for each file in the versions directory
-    # _list = os.listdir('versions')
-    # # strip the time info and put into a list
-    # for item in _list:
-    #     base_name = os.path.basename(item)
-    #     file_name = base_name.split(".")[0]
-    #     name = file_name.split("_")[2]
-    #     time_list.append(name)
-    # # sort the list
-    # time_list.sort(reverse=True)
-    # # slice from the number needed to the end
-    # if number == 0 or number == 1:
-    #     time_list = time_list[1:]
-    # else:
-    #     time_list = time_list[int(number):]
-    # del_list = []
-    # for time in time_list:
-    #     file_name = "web_static_{}.tgz".format(time)
-    #     del_list.append(file_name)
-    # for _file in del_list:
-    #     local("rm versions/{}".format(_file))
-    # for _file in del_list:
-    #     sudo("rm /data/web_static/releases/{}".format(_file))
