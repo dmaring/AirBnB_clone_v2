@@ -20,8 +20,8 @@ def hbnb():
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def hbnb():
+def c_text(text):
     """ A route that displays C and input text """
-    return "C %s" % escape(text)
+    return "C %s" % escape(text.replace("_", " "))
 
 app.run()
