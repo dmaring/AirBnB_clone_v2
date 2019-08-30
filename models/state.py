@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This is the state class"""
 from models.base_model import BaseModel, Base
+from models.city import City
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String
 import models
@@ -34,9 +35,7 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             _list = []
-            all_objects = models.storage.all()
-            for _id in all_objects:
-                if ('City' in _id):
-                    if (all_objects[_id].state_id == self.id):
-                        _list.append(all_objects[_id])
+            for _id, city in models.storage.all(City).items():
+                if city.state_id == self.id:
+                        _list.append(city)
             return(_list)
