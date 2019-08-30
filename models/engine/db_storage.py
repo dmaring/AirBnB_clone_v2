@@ -9,6 +9,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+# from models import storage
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -45,7 +46,7 @@ class DBStorage:
                 for res in results:
                     objs.append(res)
         else:
-            objs = self.__session.query(cls).all()
+            objs = self.__session.query(eval(cls)).all()
         for obj in objs:
             key = type(obj).__name__ + "." + str(obj.id)
             _dict[key] = obj
@@ -77,3 +78,7 @@ class DBStorage:
         self.__session.close()
         Base.metadata.drop_all(self.__engine)
         self.reload()
+
+    def close(self):
+        """Method to close out, implicity calls Session.close()"""
+        self.__session.close()

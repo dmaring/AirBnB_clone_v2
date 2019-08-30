@@ -3,6 +3,7 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String
+import models
 import os
 
 
@@ -27,4 +28,15 @@ class State(BaseModel, Base):
             for city in self.cities:
                 if city.state_id == self.id:
                     _list.append(city)
+            return(_list)
+
+    else:
+        @property
+        def cities(self):
+            _list = []
+            all_objects = models.storage.all()
+            for _id in all_objects:
+                if ('City' in _id):
+                    if (all_objects[_id].state_id == self.id):
+                        _list.append(all_objects[_id])
             return(_list)
