@@ -19,6 +19,12 @@ class FileStorage:
     """
     __file_path = "file.json"
     __objects = {}
+    __classes = {'User': User,
+                 'State': State,
+                 'City': City,
+                 'Place': Place,
+                 'Review': Review,
+                 'Amenity': Amenity}
 
     def all(self, cls=None):
         """returns a dictionary
@@ -28,7 +34,7 @@ class FileStorage:
         if cls:
             _dict = {}
             for k, v in self.__objects.items():
-                if k.split('.')[0] == cls.__name__:
+                if k.split('.')[0] == cls:
                     _dict[k] = v
             return _dict
         else:

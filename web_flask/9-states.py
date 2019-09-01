@@ -68,6 +68,17 @@ def cities_by_states():
     return render_template('8-cities_by_states.html', states=states)
 
 
+@app.route('/states/', defaults={'s_id': None})
+@app.route('/states/<s_id>')
+def states(s_id):
+    """ A route that displays states by id if passed """
+    states = storage.all('State')
+    if s_id:
+        s_id = "{}.{}".format('State', s_id)
+    return render_template('9-states.html',
+                           states=states, s_id=s_id)
+
+
 @app.teardown_appcontext
 def close_db(error):
     """Closes the database at the end of the request."""

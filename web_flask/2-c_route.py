@@ -24,4 +24,5 @@ def c_text(text):
     """ A route that displays C and input text """
     return "C %s" % escape(text.replace("_", " "))
 
-app.run()
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port='5000')
