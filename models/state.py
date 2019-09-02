@@ -33,10 +33,7 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             _list = []
-            print("hello")
             for _id, city in models.storage.all('City').items():
-                print(city.state_id)
-                print(self.id)
                 if city.state_id == self.id:
                         _list.append(city)
             return(_list)
