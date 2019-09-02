@@ -24,6 +24,7 @@ def c_text(text):
     """ A route that displays C and input text """
     return "C %s" % escape(text.replace("_", " "))
 
+
 @app.route('/python/', defaults={'text': 'is cool'}, strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
 def python_text(text):
