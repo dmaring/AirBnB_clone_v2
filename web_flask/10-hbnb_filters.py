@@ -78,6 +78,7 @@ def states(s_id):
     return render_template('9-states.html',
                            states=states, s_id=s_id)
 
+
 @app.route('/hbnb_filters')
 def hbnb_filters():
     """ A route that displays the popover search filter options """

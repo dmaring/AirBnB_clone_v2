@@ -34,6 +34,8 @@ class FileStorage:
         if cls:
             _dict = {}
             for k, v in self.__objects.items():
+                if type(cls) != str:
+                    cls = cls.__name__
                 if k.split('.')[0] == cls:
                     _dict[k] = v
             return _dict

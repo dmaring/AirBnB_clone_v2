@@ -22,6 +22,12 @@ class DBStorage:
 
     __engine = None
     __session = None
+    __classes = {'User': User,
+                 'State': State,
+                 'City': City,
+                 'Place': Place,
+                 'Review': Review,
+                 'Amenity': Amenity}
 
     def __init__(self):
         """Constructor for DBStorage"""
@@ -40,13 +46,15 @@ class DBStorage:
         _dict = {}
         if cls is None:
             objs = []
-            classes = ['User', 'State', 'City', 'Place', 'Review', 'Amenity']
-            for c in classes:
-                results = self.__session.query(eval(c))
+            for c in self.__classes.keys():
+                results = self.__session.query(self.__classes[c])
                 for res in results:
                     objs.append(res)
         else:
-            objs = self.__session.query(eval(cls)).all()
+            if type(cls) == str:
+                objs = self.__session.query(self.__classes[cls]).all()
+            else:
+                objs = self.__session.query(cls).all()
         for obj in objs:
             key = type(obj).__name__ + "." + str(obj.id)
             _dict[key] = obj
